@@ -1,0 +1,139 @@
+.header {
+
+  .reset();
+  position: relative;
+  padding: 50px 0;
+  border-bottom: 1px solid #666;
+  min-height: 400px;
+
+  .container {
+
+    position: relative;
+
+  }
+
+  .header-inner {
+
+    z-index: 3000;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+
+  }
+
+  .header-logo {
+
+    .reset();
+    float: left;
+    width: 40%;
+
+    a {
+
+      .reset();
+      text-decoration: none;
+      .opacity(100);
+      cursor: pointer;
+
+      h1 {
+
+        .reset();
+        font-size: 26px;
+        color: white;
+
+      }
+
+    }
+
+    a:hover {
+
+      .opacity(80);
+
+    }
+
+  }
+
+  .header-menu {
+
+    .reset();
+    padding: 5px 10px;
+    float: right;
+
+    color: white;
+
+    .header-menu-item {
+
+      .reset();
+      margin-left: 15px;
+      display: inline-block;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      cursor: pointer;
+
+      .opacity(100);
+
+    }
+
+    .header-menu-item:hover {
+
+      .opacity(80);
+
+    }
+
+  }
+
+
+  .hero-large-overlay {
+
+    .reset();
+    min-height: 400px;
+    position: absolute;
+    
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+
+    background-color: rgba(0, 0, 0, 0.8);
+
+    // box-shadow: 10px 10px 10px rgba(0,0,0,0.3);
+
+
+    z-index: 100;
+
+  }
+
+  .hero-large {
+
+    .reset();
+    min-height: 400px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-size: cover;
+
+    z-index: 500;
+
+  }
+
+}
+
+.header-alt {
+
+  min-height: 130px;
+
+  .hero-large-overlay {
+
+    min-height: 130px;
+
+  } 
+
+  .hero-large {
+
+    min-height: 130px;
+
+  } 
+
+}

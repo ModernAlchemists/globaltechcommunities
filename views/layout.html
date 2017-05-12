@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  <div class="header {% if background_image == False %}header-alt{% endif %}">
+
+    <div class="hero-large-overlay">
+      
+      {% if background_image != False %}
+        <div class="hero-large" style="background-image: url({{background_image}});"></div>
+      {% endif %}
+      
+    </div>
+
+    <div class="container">
+
+      <div class="header-inner">
+
+        <div class="header-menu">
+
+          <a href="/events" class="header-menu-item">Events</a>
+          <a href="/communities" class="header-menu-item">Communities</a>
+          <a href="/sponsor" class="header-menu-item">Sponsor</a>
+          <a href="/contact" class="header-menu-item">Contact</a>
+
+        </div>
+
+        <div class="header-logo">
+
+          <a href="/">
+            
+            <h1>Global Tech Communities</h1>
+
+          </a>
+
+        </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+  </div>
+
+  <div class="clearfix"></div>
+
+  {% block pre_page_content %}{% endblock %}
+
+  <div class="content">
+
+    {% block page_content_wrapper %}
+
+      {% block page_content %}{% endblock %}
+
+    {% endblock %}
+
+  </div>
+
+  {% block post_page_content %}{% endblock %}
+
+  <div class="footer">
+
+    <div class="container">
+
+      <div class="footer-inner">
+
+        <div class="footer-links">
+
+          <a class="footer-link" href="/faq">FAQ</a>
+          <a class="footer-link" href="/disclaimer">DISCLAIMER</a>
+          <a class="footer-link" href="/terms">T&C'S</a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock %}

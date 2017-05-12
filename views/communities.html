@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="segment">
+
+    <div class="container">
+
+      <div class="segment-inner">
+
+        <h3>Communities</h3>
+
+        {% if groups|length > 0 %}
+
+          <div class="events">
+
+            {% for group in groups %}
+        
+              <a class="event" href="/communities/{{group.key.id()}}">
+                <img class="event-preview" src="{{group.thumbnail}}" />
+                <div class="event-heading-meta">
+                  <h3 class="event-heading">{{group.name}}</h3>
+                  <p class="event-description">{{group.description}}</p>
+                </div>
+              </a>
+
+              {% if loop.index % 4 == 0 %}
+
+                <div class="clearfix"></div>
+
+              {% endif %}
+
+            {% endfor %}
+
+            <div class="clearfix"></div>
+
+          </div>
+
+        {% else %}
+
+          <p>No communities registered yet</p>
+
+        {% endif %}
+
+      </div>
+
+    </div>
+
+  </div>
+    
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="segment">
+
+    <div class="container">
+
+      <div class="segment-inner">
+
+        <h3>Events:</h3>
+
+        {% if items|length > 0 %}
+
+          <select>
+            <option value="#">Cape Town</option>
+            <option value="#">Johannesburg</option>
+          </select>
+
+          <br />
+          <br />
+
+          <div class="events">
+
+            {% for item in items %}
+        
+              <a class="event" href="/events/{{item['event'].key.id()}}">
+                <img class="event-preview" src="{{item['group'].thumbnail}}" />
+                <div class="event-heading-meta">
+                  <h3 class="event-heading">{{item['event'].title}}</h3>
+                  <p class="event-description">{{item['event'].description}}</p>
+                  <div class="clearfix"></div>
+                </div>
+              </a>
+
+              {% if loop.index % 3 == 0 %}
+
+                <div class="clearfix"></div>
+
+              {% endif %}
+
+            {% endfor %}
+
+            <div class="clearfix"></div>
+
+          </div>
+
+        {% else %}
+
+          <p>No upcoming events found</p>
+
+        {% endif %}
+
+        <div class="clearfix"></div>
+
+      </div>
+
+      <div class="clearfix"></div>
+
+    </div>
+
+  </div>
+    
+{% endblock %}

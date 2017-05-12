@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="segment">
+
+    <div class="container">
+
+      <div class="segment-inner">
+
+        <h3>Events</h3>
+
+        <p>{{event.description}}</p>
+
+        <p><a href="{{event.link}}">{{event.link}}</a></p>
+
+      </div>
+
+    </div>
+
+  </div>
+    
+{% endblock %}

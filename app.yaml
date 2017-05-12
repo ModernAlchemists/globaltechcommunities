@@ -1,0 +1,87 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+
+# set to run
+env_variables:
+  MEETUP_API_TOKEN: ''
+  MEETUP_MEMBER_ID: ''
+  SENDGRID_TOKEN: ''
+  SENDGRID_FROM: ''
+  SESSION_SECRET: ''
+
+handlers:
+# Show our from the distribution
+- url: /css
+  static_dir: public/css
+
+# Show all our dist JS
+- url: /vendor
+  static_dir: public/vendor
+
+# Show all our dist JS
+- url: /js
+  static_dir: public/js
+
+# Show HTML folder
+- url: /fonts
+  static_dir: public/fonts
+
+# Show HTML folder
+- url: /html
+  static_dir: public/html
+
+# Show Images folder
+- url: /img
+  static_dir: public/img
+
+# Show Images folder
+- url: /templates
+  static_dir: templates
+
+# Special files
+- url: /manifest.json
+  static_files: public/manifest.json
+  upload: public/manifest.json
+
+# Special files
+- url: /(.*\.(gif|png|jpg|ico|txt|xml|txt|css|js|html))
+  static_files: public/\1
+  upload: public/(.*\.(gif|png|jpg|ico|txt))
+
+# Setup Main Handler
+- url: /.*
+  script: gtc.main.app
+
+skip_files:
+
+- ^(.*/)?.*/assets/.*$
+- ^(.*/)?.*/build/.*$
+- ^(.*/)?.*/test/.*$
+- ^(.*/)?.*/templates/.*$
+- ^(.*/)?.*/node_modules/.*$
+- lib/*
+
+- ^(assets/.*)
+- ^(build/.*)
+- ^(scripts/.*)
+- ^(styles/.*)
+- ^(design/.*)
+- ^(test/.*)
+- ^(templates/.*)
+- ^(node_modules/.*)
+
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.DS_Store$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+
+libraries:
+- name: webapp2
+  version: latest
+- name: jinja2
+  version: latest
+- name: lxml
+  version: latest

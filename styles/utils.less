@@ -1,0 +1,109 @@
+/**
+*
+**/
+.clearfix {
+
+  margin: 0;
+  padding: 0;
+
+  clear: both;
+
+}
+
+/**
+* Reset div block
+**/
+.reset {
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: block;
+  
+}
+
+/**
+* Inline menu that any list on the site can use.
+* this would give the base style and then you add your own 
+* class
+**/
+ul.inline {
+
+	list-style: none;
+
+	margin: 0;
+	padding: 0;
+
+	li {
+
+		display: inline-block;
+		list-style: none;
+
+		margin: 0;
+		padding: 0;
+
+		a {
+
+			font-weight: bold;
+
+		}
+
+	}
+
+}
+
+.opacity (@alpha: 50) {
+
+	/* Theoretically for IE 8 & 9 (more valid) */
+  /* ...but not required as filter works too */
+  /* should come BEFORE filter */
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=@alpha)"; // IE8
+
+  /* This works in IE 8 & 9 too */
+  /* ... but also 5, 6, 7 */
+  filter: alpha(opacity=@alpha); // IE 5-7
+  
+  /* Modern Browsers */
+  opacity: @alpha / 100;
+
+}
+
+/**
+* Gives us a clear fix
+**/
+.clearfix {
+
+	clear: both;
+
+	margin: 0;
+	padding: 0;
+
+}
+
+/**
+* Produces a rounded corner set with all the
+* extensions from all the browsers
+**/
+.rounded-corners (@radius: 5px) {
+
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	-ms-border-radius: @radius;
+	-o-border-radius: @radius;
+	border-radius: @radius;
+	
+}
+
+/**
+* Prouces a Block of code to ceate a gradient
+**/
+.vertical-gradient (@start_gradient: #444444, @end_gradient: #999999) {
+
+	background-color: @start_gradient;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(@start_gradient), to(@end_gradient)); /* Chrome, Safari 4+ */
+	background-image: -webkit-linear-gradient(top, @start_gradient, @end_gradient); /* Chrome 10-25, iOS 5+, Safari 5.1+ */
+	background-image:    -moz-linear-gradient(top, @start_gradient, @end_gradient); /* Firefox 3.6-15 */
+	background-image:      -o-linear-gradient(top, @start_gradient, @end_gradient); /* Opera 11.10-12.00 */
+	background-image:         linear-gradient(to bottom, @start_gradient, @end_gradient); /* Chrome 26, Firefox 16+, IE 10+, Opera 12.10+ */
+
+}

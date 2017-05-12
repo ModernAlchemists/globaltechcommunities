@@ -1,0 +1,71 @@
+dataset
+*.py[co]
+
+lib-cov
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+stdout.log
+log.txt
+._.*
+
+pids
+logs
+
+node_modules/
+cached/
+
+npm-debug.log
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+gen
+public/js
+public/css
+public/gen
+static/
+eggs
+parts
+bin
+lib
+include
+.Python
+var
+sdist
+develop-eggs
+.installed.cfg
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+#Translations
+*.mo
+
+#Mr Developer
+.mr.developer.cfg
+
+# Mac
+.DS_Store
+._.DS_Store
+
+# Local Build directories
+tmp/*
+build/*
+public/dist/*
+
+
+vagrant/
+.vagrant/
+backups/
+yarn.lock
+

@@ -1,0 +1,58 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="segment">
+
+    <div class="container">
+
+      <div class="segment-inner">
+
+        <h3>Contact:</h3>
+
+        <form class="form" method="post" action="/contact">
+
+          <div class="form-control">
+
+            <label class="form-label">Name <span class="form-required">*</span></label>
+            <input type="text" class="form-input" />
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">EMail Address <span class="form-required">*</span></label>
+            <input type="text" class="form-input" />
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Subject <span class="form-required">*</span></label>
+            <input type="text" class="form-input" />
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Message <span class="form-required">*</span></label>
+            <textarea class="form-input"></textarea>
+
+          </div>
+
+
+          <div class="form-control">
+
+            <button>Send</button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+    
+{% endblock %}
