@@ -1,13 +1,25 @@
 .events {
 
   .reset();
+  width: 100%;
+
+  .events-calendar {
+    margin: 0 auto;
+    max-width: 80%;
+    overflow: visible;
+  }
+
+  .fc-list-item, .fc-list-item-title, .fc-list-item-title a {
+
+    cursor: pointer;
+
+  }
 
   .event {
 
     .reset();
     margin: 10px;
-    width: 33%;
-    float: left;
+    width: 100%;
 
     box-sizing: border-box;
     display: block;
@@ -18,19 +30,33 @@
     background: #fff;
     border-radius: 3px 3px 5px 5px;
     box-shadow: 0 0 1px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.03);
-    transition: all .6s ease-out;
+    /* transition: all .6s ease-out; */
+    position: relative;
+    overflow: hidden;
+    height: 270px;
 
     .event-preview {
 
       .reset();
-      width: 100%;
-      .opacity(80);
+      float: left;
+      width: 50%;
+      overflow: hidden;
+      .opacity(100);
+
+      img {
+
+        .reset();
+        width: 100%;
+
+      }
 
     }
 
     .event-heading-meta {
 
       .reset();
+      float: left;
+      width: 50%;
       padding: 10px 25px;
 
     }

@@ -5,6 +5,7 @@ threadsafe: true
 # set to run
 env_variables:
   MEETUP_API_TOKEN: ''
+  FACEBOOK_API_TOKEN: ''
   MEETUP_MEMBER_ID: ''
   SENDGRID_TOKEN: ''
   SENDGRID_FROM: ''
@@ -50,6 +51,16 @@ handlers:
   upload: public/(.*\.(gif|png|jpg|ico|txt))
 
 # Setup Main Handler
+- url: /edit.*
+  script: gtc.main.app
+  login: admin
+
+# Setup Main Handler
+- url: /admin.*
+  script: gtc.main.app
+  login: admin
+
+# Setup Main Handler
 - url: /.*
   script: gtc.main.app
 
@@ -62,6 +73,7 @@ skip_files:
 - ^(.*/)?.*/node_modules/.*$
 - lib/*
 
+- dataset
 - ^(assets/.*)
 - ^(build/.*)
 - ^(scripts/.*)

@@ -17,18 +17,18 @@ import gtc.utils.string as strings
 import gtc.schema as schema
 
 # Acts as the Frontpage when users are not signed in and the dashboard when they are.
-class CommunitiesHandler(BaseHandler):
+class AdminHandler(BaseHandler):
 
   def get(self):
 
-    groups = schema.Group.fetch()
+    # get the groups
+    groups = schema.Group.get()
 
     # check if we currently have that plan registered
-    self.render('communities.html', {
+    self.render('admin.html', {
 
-      'groups': groups,
-      'title': 'Communities',
-      'background_image': '/img/photos/endofyearstellies.jpg'
+      'title':    'Admin Monitored Pages',
+      'groups':   groups
 
     })
     

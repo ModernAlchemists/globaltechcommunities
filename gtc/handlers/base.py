@@ -20,6 +20,7 @@ import gtc.utils.string as string_utils
 
 # Setup our Jinja Runner
 jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('views'))
+CURRENT_VERSION = string_utils.md5(os.environ['CURRENT_VERSION_ID'])
 
 #
 # Acts as the Frontpage when users are not signed in and the dashboard when they are
@@ -181,7 +182,8 @@ class BaseHandler(webapp2.RequestHandler):
     'errors': [],
     'config': os.environ,
     'current_year': date.today().year,
-    'background_image': False
+    'background_image': False,
+    'current_version': CURRENT_VERSION
 
   }
 

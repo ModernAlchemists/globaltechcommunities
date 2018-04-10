@@ -2,45 +2,52 @@
 
 {% block page_content %}
 
-  <div class="segment">
+  <div class="funding">
 
     <div class="container">
 
-      <div class="segment-inner">
+      <div class="funding-inner">
 
-        <h3>Sponsor:</h3>
+      <h2 class="funding-header">SPONSOR</h2>
 
-        <p>So, your brand like to get involved with the tech community? Tech initiatives are always looking for sponsors to help take their ideas to the next level, and give their solutions a broader impact. If you believe that your brand is ready to help make this a reality, or if you’d just like access to a group of interested, invested tech people, you’ve come to the right place. Take a look at our past events and photo galleries to see how past sponsors have aligned their brands when sponsoring one of our tech groups.</p>
+        <p class="funding-desc">So, your brand like to get involved with the tech community? Tech initiatives are always looking for sponsors to help take their ideas to the next level, and give their solutions a broader impact. If you believe that your brand is ready to help make this a reality, or if you’d just like access to a group of interested, invested tech people, you’ve come to the right place. Take a look at our past events and photo galleries to see how past sponsors have aligned their brands when sponsoring one of our tech groups.</p>
 
-        <p class="sponsor-tagline">TO GIVE US AN IDEA OF HOW TO SHOWCASE YOUR BRAND BEST, PLEASE FILL IN THE FORM BELOW AND INDICATE WHICH COMMUNITY OR EVENT YOU WOULD LIKE TO SPONSOR.</p>
+        <p class="funding-tagline">TO GIVE US AN IDEA OF HOW TO SHOWCASE YOUR BRAND BEST, PLEASE FILL IN THE FORM BELOW AND INDICATE WHICH COMMUNITY OR EVENT YOU WOULD LIKE TO SPONSOR.</p>
 
         <form class="form" method="post" action="/contact">
 
           <div class="form-control">
 
             <label class="form-label">Name <span class="form-required">*</span></label>
-            <input type="text" class="form-input" />
+            <input type="text" name="name" class="form-input" />
 
           </div>
 
           <div class="form-control">
 
             <label class="form-label">EMail Address <span class="form-required">*</span></label>
-            <input type="text" class="form-input" />
+            <input type="text" name="email" class="form-input" />
 
           </div>
 
           <div class="form-control">
 
             <label class="form-label">Subject <span class="form-required">*</span></label>
-            <input type="text" class="form-input" />
+            <input type="text" name="subject"  class="form-input" />
 
           </div>
 
           <div class="form-control">
 
-            <label class="form-label">Message <span class="form-required">*</span></label>
-            <textarea class="form-input"></textarea>
+            <label class="form-label">Company <span class="form-required">*</span></label>
+            <input type="text" name="company"  class="form-input" />
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Website <span class="form-required">*</span></label>
+            <input type="text" name="website"  class="form-input" />
 
           </div>
 
@@ -52,10 +59,6 @@
           </div>
 
         </form>
-
-        <h3>We have worked with these fine folks in the past:</h3>
-
-        <p>TODO list companies here</p>
 
       </div>
 

@@ -33,12 +33,19 @@ class CommunityHandler(BaseHandler):
       # nope
       return
 
+    # the start date
+    timestamp = datetime.datetime.now()
+
+    # get the events
+    events = schema.Event.get_by_filter(starts=timestamp,group=group,limit=3)
+
     # check if we currently have that plan registered
     self.render('community.html', {
 
       'title': group.name,
       'group': group,
+      'events': events,
       'background_image': group.image
 
-    })
+    }, ttl=3600)
     

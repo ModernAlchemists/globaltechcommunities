@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="admin">
+
+    <div class="container">
+
+      <h1>Monitored Groups</h1>
+
+      <table>
+        {% for group in groups %}
+
+          <tr>
+            
+            <td><h4>{{group.name}}</h4></td>
+            <td class="actions">
+              
+              <a href="/edit/{{group.key.id()}}">Edit</a>
+              <span>&nbsp;</span>
+              <a href="/delete/{{group.key.id()}}" onclick="return confirm('Really delete?');">Delete</a>
+
+            </td>
+
+          </tr>
+
+        {% endfor %}
+      </table>
+
+  </div>
+    
+{% endblock %}

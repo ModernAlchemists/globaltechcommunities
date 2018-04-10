@@ -8,48 +8,11 @@
 
       <div class="segment-inner">
 
-        <h3>Events:</h3>
+        <p><a class="btn" href="/calendar.ics">Sync with your Calendar Program (.ICS)</a></p>
 
-        {% if items|length > 0 %}
+        <br />
 
-          <select>
-            <option value="#">Cape Town</option>
-            <option value="#">Johannesburg</option>
-          </select>
-
-          <br />
-          <br />
-
-          <div class="events">
-
-            {% for item in items %}
-        
-              <a class="event" href="/events/{{item['event'].key.id()}}">
-                <img class="event-preview" src="{{item['group'].thumbnail}}" />
-                <div class="event-heading-meta">
-                  <h3 class="event-heading">{{item['event'].title}}</h3>
-                  <p class="event-description">{{item['event'].description}}</p>
-                  <div class="clearfix"></div>
-                </div>
-              </a>
-
-              {% if loop.index % 3 == 0 %}
-
-                <div class="clearfix"></div>
-
-              {% endif %}
-
-            {% endfor %}
-
-            <div class="clearfix"></div>
-
-          </div>
-
-        {% else %}
-
-          <p>No upcoming events found</p>
-
-        {% endif %}
+        <div class="events-calendar"></div>
 
         <div class="clearfix"></div>
 
@@ -61,4 +24,78 @@
 
   </div>
     
+{% endblock %}
+
+{% block scripts %}
+
+  <script>
+
+    // the date we doing this for
+    var current_date = new Date(parseInt('{{year}}'), parseInt('{{month}}'), 0, 0, 0, 0);
+    var entries = [];
+
+    {% for entry in entries %}
+
+      try {entries.push( {{entry|safe}} )} catch(err) {}
+
+    {% endfor %}
+
+    $(document).ready(function() {
+
+      $('.events-calendar').fullCalendar({
+
+        contentHeight: "auto",
+        height: "auto",
+        header: {
+            left: 'prev,next',
+            center: 'title',
+            right: 'listMonth,month'
+        },
+        views: {
+          listMonth: { buttonText: 'Event Listing' },
+          month: { buttonText: 'Calendar' }
+        },
+        navLinks: true,
+        eventLimit: true, // allow "more" link when too many events
+        defaultDate: current_date,
+        defaultView: 'listMonth',
+        editable: false,
+        eventLimit: false,
+        eventClick: function(calEvent, jsEvent, view) { document.location = calEvent.link; },
+        events: entries
+
+      });
+
+      $('.fc-prev-button').unbind();
+      $('.fc-prev-button').click(function(e) {
+
+        if(e) e.preventDefault();
+        if(e) e.stopPropagation();
+
+        var d = new Date(parseInt('{{year}}'), parseInt('{{month}}'), 1);
+        d.setMonth(d.getMonth() - 1);
+        // console.log(d);
+        document.location = '/events/' + d.getFullYear() + '/' + (d.getMonth());
+
+      });
+
+      $('.fc-next-button').unbind();
+      $('.fc-next-button').click(function(e) {
+
+        if(e) e.preventDefault();
+        if(e) e.stopPropagation();
+        var d = new Date(parseInt('{{year}}'), parseInt('{{month}}'), 1);
+        d.setMonth(d.getMonth() + 1);
+        // console.log(d);
+        document.location = '/events/' + d.getFullYear() + '/' + (d.getMonth());
+
+      });
+
+      $('.events-calendar').fullCalendar('option', 'height', 'auto');
+      $('.events-calendar').fullCalendar('option', 'contentHeight', 'auto');
+
+    });
+
+  </script>
+
 {% endblock %}

@@ -18,7 +18,7 @@ class Group(BaseModel):
   name          = ndb.StringProperty(default=None)
   members       = ndb.IntegerProperty(default=None)
   slug          = ndb.StringProperty(default=None)
-  description   = ndb.StringProperty(default=None)
+  description   = ndb.TextProperty(default=None)
   image         = ndb.StringProperty(default=None)
   thumbnail     = ndb.StringProperty(default=None)
   link          = ndb.StringProperty(default=None)
@@ -26,6 +26,12 @@ class Group(BaseModel):
   uid           = ndb.StringProperty(default=None)
   lat           = ndb.FloatProperty(default=None)
   lng           = ndb.FloatProperty(default=None)
+  enabled       = ndb.BooleanProperty(default=True)
+
+  facebook_url  = ndb.StringProperty(default=None)
+  facebook_uid  = ndb.StringProperty(default=None)
+  meetup_url    = ndb.StringProperty(default=None)
+  meetup_uid    = ndb.StringProperty(default=None)
 
   # timestamps
   created       = ndb.DateTimeProperty(auto_now_add=True)
@@ -38,7 +44,7 @@ class Group(BaseModel):
 
   @staticmethod
   def get():
-    return Group.query().order(-Group.slug).fetch()
+    return Group.query().order(Group.name).fetch()
 
   @staticmethod
   def fetch():

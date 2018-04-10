@@ -2,21 +2,58 @@
 
 {% block page_content %}
 
-  <div class="segment">
+  <div class="community">
 
     <div class="container">
 
-      <div class="segment-inner">
+      <div class="community-inner">
 
         <h3>{{group.title}}</h3>
 
-        <p>{{group.description}}</p>
+        {{group.description|safe}}
 
-        <p><a href="{{group.link}}">View Group Details</a></p>
+        {% if group.meetup_url != None and group.meetup_url != '' %}
+
+          <p><a class="btn" href="{{group.meetup_url}}">View on Meetup</a></p>
+
+        {% endif %}
+
+        {% if group.facebook_url != None and group.facebook_url != '' %}
+
+          <p><a class="btn" href="{{group.facebook_url}}">View on Facebook</a></p>
+
+        {% endif %}
+        
+        <p><a class="btn" href="/communities/{{group.key.id()}}/calendar.ics">ICAL</a></p>
 
         <h3>Upcoming events for community</h3>
 
-        <p>TODO - list events here</p>
+        {% if events|length > 0 %}
+
+          <div class="community-columns">
+            
+            <div class="clearfix"></div>
+
+            {% for event in events %}
+
+              <a class="community-column" href="/events/{{event.timestamp.year}}/{{event.timestamp.month}}/{{event.key.id()}}">
+                <img class="community-column-preview" src="{{group.thumbnail}}" />
+                <h2 class="community-column-label">{{event.title}}</h2>
+              </a>
+
+            {% endfor %}
+
+            <div class="clearfix"></div>
+
+          </div>
+
+          <div class="clearfix"></div>
+
+        {% else %}
+
+          <p>No upcoming events found</p>
+
+        {% endif %}
 
       </div>
 

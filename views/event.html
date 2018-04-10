@@ -2,22 +2,247 @@
 
 {% block page_content %}
 
-  <div class="segment">
+  <div class="event">
 
     <div class="container">
 
-      <div class="segment-inner">
+      <div class="event-inner">
 
-        <h3>Events</h3>
+        <div class="event-desc">
+          {% if event.description %}
+          {{event.description|safe}}
+          {% else %}
+          <p>No description given :(</p>
+          {% endif %}
+        </div>
 
-        <p>{{event.description}}</p>
-
-        <p><a href="{{event.link}}">{{event.link}}</a></p>
+        <p><a class="btn" href="{{event.link}}">View the event website</a></p>
+        <p><a class="btn" href="/communities/{{group.key.id()}}">View more from community</a></p>
 
       </div>
 
     </div>
 
+    {% if event.lat and event.lng %}
+
+      <div id="event-map" class="event-map"></div>
+
+    {% endif %}
+
   </div>
     
+{% endblock %}
+
+{% block scripts %}
+
+  <script>
+
+    $(document).ready(function() {
+
+      {% if event.lat and event.lng %}
+
+        setTimeout(function() {
+
+          var TILE_SIZE = 256;
+          var pos = new google.maps.LatLng({{event.lat}}, {{event.lng}});
+
+          function createInfoWindowContent(latLng, zoom) {
+            var scale = 1 << zoom;
+
+            var worldCoordinate = project(latLng);
+
+            var pixelCoordinate = new google.maps.Point(
+                Math.floor(worldCoordinate.x * scale),
+                Math.floor(worldCoordinate.y * scale));
+
+            var tileCoordinate = new google.maps.Point(
+                Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+                Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+
+            return [
+              
+              '{{event.title}}'
+
+            ].join('<br>');
+          }
+
+          // The mapping between latitude, longitude and pixels is defined by the web
+          // mercator projection.
+          function project(latLng) {
+            var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+            // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+            // about a third of a tile past the edge of the world tile.
+            siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+            return new google.maps.Point(
+                TILE_SIZE * (0.5 + latLng.lng() / 360),
+                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+          }
+
+
+          var map = new google.maps.Map(document.getElementById('event-map'), {
+            
+            center: {lat: {{event.lat}}, lng: {{event.lng}}},
+            zoom: 14,
+
+            draggable: false,
+            zoomControl: false,
+            scrollwheel: false,
+            disableDoubleClickZoom: true,
+
+            styles: [
+              {
+                  "featureType": "water",
+                  "stylers": [
+                      {
+                          "saturation": 43
+                      },
+                      {
+                          "lightness": -11
+                      },
+                      {
+                          "hue": "#0088ff"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "hue": "#ff0000"
+                      },
+                      {
+                          "saturation": -100
+                      },
+                      {
+                          "lightness": 99
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "geometry.stroke",
+                  "stylers": [
+                      {
+                          "color": "#808080"
+                      },
+                      {
+                          "lightness": 54
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape.man_made",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "color": "#ece2d9"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.park",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "color": "#ccdca1"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "labels.text.fill",
+                  "stylers": [
+                      {
+                          "color": "#767676"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [
+                      {
+                          "color": "#ffffff"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape.natural",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      },
+                      {
+                          "color": "#b8cb93"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.park",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.sports_complex",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.medical",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.business",
+                  "stylers": [
+                      {
+                          "visibility": "simplified"
+                      }
+                  ]
+              }
+          ]
+
+          });
+
+          var coordInfoWindow = new google.maps.InfoWindow();
+          coordInfoWindow.setContent(createInfoWindowContent(pos, map.getZoom()));
+          coordInfoWindow.setPosition(pos);
+          coordInfoWindow.open(map);
+
+          map.addListener('zoom_changed', function() {
+            
+            coordInfoWindow.setContent(createInfoWindowContent(pos, map.getZoom()));
+            coordInfoWindow.open(map);
+
+          });
+
+        }, 1000);
+
+      {% endif %}
+      
+    });
+
+  </script>
+
 {% endblock %}

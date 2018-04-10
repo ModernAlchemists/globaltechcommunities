@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="admin">
+
+    <div class="container">
+
+      <form action="/edit/{{group.key.id()}}" method="post">
+
+        <h1>{{group.name}}</h1>
+
+        <div class="form-control">
+          <label class="form-label">Name <span class="form-required">*</span></label>
+          <input type="text" class="form-input" name="name" value="{{group.name}}" />
+        </div>
+
+        <div class="form-control">
+          <label class="form-label">Description <span class="form-required">*</span></label>
+          <textarea name="description" class="form-input">{{group.description}}</textarea>
+        </div>
+
+        <div class="form-control">
+          <label class="form-label">Featured <span class="form-required">*</span></label>
+          <select name="">
+            <option value="notfeatured" {% if group.featured == False %}selected="selected"{% endif %}>Not Featured</option>
+            <option value="featured" {% if group.featured == True %}selected="selected"{% endif %}>Featured</option>
+          </select>
+        </div>
+
+        <h3>Social Accounts</h3>
+
+        <div class="form-control">
+          <label class="form-label">Facebook UID <span class="form-required">*</span></label>
+          <input type="text" class="form-input" name="facebook_uid" value="{% if group.facebook_uid != None  and group.facebook_uid != 'None' %}{{group.facebook_uid}}{% else %}{% endif %}" />
+        </div>
+
+        <div class="form-control">
+          <label class="form-label">Facebook URL <span class="form-required">*</span></label>
+          <input type="text" class="form-input" name="facebook_url" value="{% if group.facebook_url != None  and group.facebook_url != 'None' %}{{group.facebook_url}}{% else %}{% endif %}" />
+        </div>
+
+        <div class="form-control">
+          <label class="form-label">Meetup UID <span class="form-required">*</span></label>
+          <input type="text" class="form-input" name="meetup_uid" value="{% if group.meetup_uid != None and group.meetup_uid != 'None' %}{{group.meetup_uid}}{% else %} {% if group.uid != None %}{{group.uid}}{% else %}{% endif %} {% endif %}" />
+        </div>
+
+        <div class="form-control">
+          <label class="form-label">Meetup URL <span class="form-required">*</span></label>
+          <input type="text" class="form-input" name="meetup_url" value="{% if group.meetup_url != None and group.meetup_url != 'None' %}{{group.meetup_url}}{% else %} {% if group.link != None %}{{group.link}}{% else %}{% endif %} {% endif %}" />
+        </div>
+
+        <div class="form-control">
+          <button>Update</button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+    
+{% endblock %}

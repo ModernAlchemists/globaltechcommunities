@@ -37,6 +37,18 @@
 
         <div class="clearfix"></div>
 
+        {% if event and event != None %}
+
+          <h2 class="header-label">{{event.title}}</h2>
+
+        {% elif group and group != None %}
+
+          <h2 class="header-label">{{group.name}}</h2>
+
+        {% endif %}
+
+        <div class="clearfix"></div>
+
       </div>
 
     </div>
@@ -67,11 +79,15 @@
 
       <div class="footer-inner">
 
+        <a href="https://www.kato.global/" class="footer-logo">
+          <img class="" src="/img/text.png" />
+        </a>
+
         <div class="footer-links">
 
           <a class="footer-link" href="/faq">FAQ</a>
           <a class="footer-link" href="/disclaimer">DISCLAIMER</a>
-          <a class="footer-link" href="/terms">T&C'S</a>
+          <a class="footer-link" href="/tcs">T&C'S</a>
 
         </div>
 

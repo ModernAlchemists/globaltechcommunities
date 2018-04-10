@@ -2,29 +2,42 @@
 
 {% block page_content %}
 
-  <div class="segment">
+  <div class="communities">
 
     <div class="container">
 
-      <div class="segment-inner">
-
-        <h3>Communities</h3>
+      <div class="communities-inner">
 
         {% if groups|length > 0 %}
 
-          <div class="events">
+          <div class="communities-columns">
+
+            <h2>Communities</h2>
+            <div class="clearfix"></div>
+
+            <p>Global Tech Communities maintains a list of communities from around the world, the events are then pulled and aggregated on a scheduled basis. <a href="/add">Request to add</a> any communities that we might be missing.</p>
+
+            <div class="clearfix"></div>
 
             {% for group in groups %}
-        
-              <a class="event" href="/communities/{{group.key.id()}}">
-                <img class="event-preview" src="{{group.thumbnail}}" />
-                <div class="event-heading-meta">
-                  <h3 class="event-heading">{{group.name}}</h3>
-                  <p class="event-description">{{group.description}}</p>
-                </div>
+
+              <a class="communities-column" href="/communities/{{group.key.id()}}">
+
+                {% if group.thumbnail %}
+
+                  <img class="communities-column-preview" src="{{group.thumbnail}}" />
+
+                {% else %}
+
+                  <img class="communities-column-preview" src="/img/photos/mic.jpg" />
+
+                {% endif %}
+
+                
+                <h2 class="communities-column-label">{{group.name}}</h2>
               </a>
 
-              {% if loop.index % 4 == 0 %}
+              {% if loop.index % 3 == 0 %}
 
                 <div class="clearfix"></div>
 
@@ -35,6 +48,8 @@
             <div class="clearfix"></div>
 
           </div>
+
+          <div class="clearfix"></div>
 
         {% else %}
 

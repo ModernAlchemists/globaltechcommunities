@@ -33,35 +33,42 @@ class DetailsHandler(BaseHandler):
       self.send('not found')
       return
 
-    result = urlfetch.fetch(
+    if provider == 'facebook':
+      self.send('facebook')
+    elif provider == 'meetup':
 
-      url='https://api.meetup.com/' + str(group.slug) + '?member_id=' + str(constants.MEETUP_MEMBER_ID) + '&key=' + str(constants.MEETUP_API_TOKEN) + '&page_start=0',
-      validate_certificate=False,
-      follow_redirects=True,
-      deadline=10,
-      allow_truncated=True
+      result = urlfetch.fetch(
 
-    )
+        url='https://api.meetup.com/' + str(group.slug) + '?member_id=' + str(constants.MEETUP_MEMBER_ID) + '&key=' + str(constants.MEETUP_API_TOKEN) + '&page_start=0',
+        validate_certificate=False,
+        follow_redirects=True,
+        deadline=10,
+        allow_truncated=True
 
-    if result.status_code == 200:
-      body = None
-      try:
-        body = json.loads(result.content)
-      except Exception as e:
-        pass
+      )
 
-      if body == None:
-        self.response.out.write('NOPE')
-        return
+      if result.status_code == 200:
+        body = None
+        try:
+          body = json.loads(result.content)
+        except Exception as e:
+          pass
 
-      group.lat = float(body['lat'])
-      group.lng = float(body['lon'])
-      group.members = int(body['members'])
-      group.description = body['description']
-      if 'key_photo' in body:
-        group.image = body['key_photo']['highres_link']
-      if 'key_photo' in body:
-        group.thumbnail = body['key_photo']['photo_link']
-      group.put()
-    self.send('done')
+        if body == None:
+          self.response.out.write('NOPE')
+          return
+
+        group.lat = float(body['lat'])
+        group.lng = float(body['lon'])
+        group.members = int(body['members'])
+        group.description = body['description']
+        if 'key_photo' in body:
+          group.image = body['key_photo']['highres_link']
+        if 'key_photo' in body:
+          group.thumbnail = body['key_photo']['photo_link']
+        group.put()
+      self.send('done')
+
+    else:
+      self.send('unknown')
     

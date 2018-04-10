@@ -19,7 +19,7 @@ import gtc.schema as schema
 # Acts as the Frontpage when users are not signed in and the dashboard when they are.
 class EventHandler(BaseHandler):
 
-  def get(self, eventid=None, slug=None):
+  def get(self, year=None, month=None, eventid=None, slug=None):
 
     # get the vent
     event = schema.Event.get_by_id(long(eventid))

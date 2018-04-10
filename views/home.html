@@ -2,42 +2,34 @@
 
 {% block page_content %}
 
-  <div class="segment">
+  <div class="home">
 
     <div class="container">
 
-      <div class="segment-inner">
-
-        <h3>Most popular upcoming Events:</h3>
+      <div class="home-inner">
 
         {% if items|length > 0 %}
 
-          <div class="events">
+          <div class="home-columns">
+
+            <h2>POPULAR UPCOMING EVENTS</h2>
+            <div class="clearfix"></div>
 
             {% for item in items %}
-        
-              <a class="event" href="/events/{{item['event'].key.id()}}">
-                <img class="event-preview" src="{{item['group'].thumbnail}}" />
-                <div class="event-heading-meta">
-                  <h3 class="event-heading">{{item['event'].title}}</h3>
-                  <p class="event-description">{{item['event'].description}}</p>
-                </div>
-                <div class="clearfix"></div>
+
+              <a class="home-column" href="/events/{{item['event'].timestamp.year}}/{{item['event'].timestamp.month}}/{{item['event'].key.id()}}">
+                <img class="home-column-preview" src="{{item['group'].thumbnail}}" />
+                <h2 class="home-column-label">{{item['event'].title}}</h2>
               </a>
-
-              {% if loop.index % 3 == 0 %}
-
-                <div class="clearfix"></div>
-
-              {% endif %}
 
             {% endfor %}
 
             <div class="clearfix"></div>
 
-            <p><a href="/events">View all upcoming events</a></p>
-
           </div>
+
+          <p><a class="btn" href="/events">View all events</a></p>
+          <p><a class="btn" href="/calendar.ics">Sync with your Calendar Program (.ICS)</a></p>
 
           <div class="clearfix"></div>
 
@@ -47,6 +39,34 @@
 
         {% endif %}
 
+        <div class="home-columns">
+
+          <h2>GET INVOLVED</h2>
+          <div class="clearfix"></div>
+
+          <a class="home-column" href="/events">
+            <img class="home-column-preview" src="/img/photos/mic.jpg" />
+            <h2 class="home-column-label">EVENTS</h2>
+            <p class="home-column-desc">Want to learn more about the cutting edge of technology and innovation around the world? Our events are for you.</p>
+            <p class="home-column-desc">Attend one of our events, from formal speaker evenings to casual maker meetups and hackathons to explore all things tech. Each event gives attendees a chance to interact with influential, interesting people and learn more about complex, intense topics that may otherwise be out of reach.</p>
+            <button class="btn" href="/events">FIND OUT MORE</button>
+          </a>
+          <a class="home-column" href="/communities">
+            <img class="home-column-preview" src="/img/photos/communities.jpg" />
+            <h2 class="home-column-label">COMMUNITIES</h2>
+            <p class="home-column-desc">Our tech communities are inclusive spaces that are designed to bring people from all walks of life together, to talk, build, design and teach tech. We want to bridge race, gender, class and education gaps, with the aim of eliminating those gaps forever. We want to empower one another through tech, by getting people involved on all levels. From building to marketing, we aim to inspire and teach to create a better understanding of the tech around us.</p>
+            <button class="btn" href="/communities">JOIN A COMMUNITY</button>
+          </a>
+          <a class="home-column" href="/sponsor">
+            <img class="home-column-preview" src="/img/photos/juice.jpg" />
+            <h2 class="home-column-label">SPONSOR</h2>
+            <p class="home-column-desc">Tech initiatives everywhere need sponsorship to help bring their ideas to life and make good ideas great, creating an even bigger impact. We work with sponsors and connect them with groups who share similar values: bringing tech and innovation to the greatest number of people, and providing information in tech. See our past events and photo galleries for examples of how our sponsors have aligned their brands with our groups.</p>
+            <button class="btn" href="/sponsor">SPONSOR AN INITIAVE</button>
+          </a>
+          <div class="clearfix"></div>
+
+        </div>
+
       </div>
 
       <div class="clearfix"></div>
@@ -55,24 +75,236 @@
 
     <div class="clearfix"></div>
 
-  </div>
+    <div class="event-map">
 
-  <div class="segment">
-
-    <div class="container">
-
-      <div class="segment-inner">
-
-        <h3>Sponsors:</h3>
-
-        <p>Thanks to these great companies helping the local tech eco-system:</p>
-
-        <p>TODO list companies here</p>
-
-      </div>
+      <div id="event-map" class="event-map-wrapper"></div>
 
     </div>
 
+    <div class="clearfix"></div>
+
   </div>
     
+{% endblock %}
+
+{% block scripts %}
+
+  <script>
+
+    $(document).ready(function() {
+
+        setTimeout(function() {
+
+          var TILE_SIZE = 256;
+
+          function createInfoWindowContent(label, latLng, zoom) {
+            var scale = 1 << zoom;
+
+            var worldCoordinate = project(latLng);
+
+            var pixelCoordinate = new google.maps.Point(
+                Math.floor(worldCoordinate.x * scale),
+                Math.floor(worldCoordinate.y * scale));
+
+            var tileCoordinate = new google.maps.Point(
+                Math.floor(worldCoordinate.x * scale / TILE_SIZE),
+                Math.floor(worldCoordinate.y * scale / TILE_SIZE));
+
+            return [
+              
+              label
+
+            ].join('<br>');
+          }
+
+          // The mapping between latitude, longitude and pixels is defined by the web
+          // mercator projection.
+          function project(latLng) {
+            var siny = Math.sin(latLng.lat() * Math.PI / 180);
+
+            // Truncating to 0.9999 effectively limits latitude to 89.189. This is
+            // about a third of a tile past the edge of the world tile.
+            siny = Math.min(Math.max(siny, -0.9999), 0.9999);
+
+            return new google.maps.Point(
+                TILE_SIZE * (0.5 + latLng.lng() / 360),
+                TILE_SIZE * (0.5 - Math.log((1 + siny) / (1 - siny)) / (4 * Math.PI)));
+          }
+
+
+          var map = new google.maps.Map(document.getElementById('event-map'), {
+            
+            center: new google.maps.LatLng(-33.9249, 18.4241),
+            zoom: 8,
+            minZoom: 1,
+
+            draggable: true,
+            zoomControl: true,
+            scrollwheel: true,
+
+            styles: [
+              {
+                  "featureType": "water",
+                  "stylers": [
+                      {
+                          "saturation": 43
+                      },
+                      {
+                          "lightness": -11
+                      },
+                      {
+                          "hue": "#0088ff"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "hue": "#ff0000"
+                      },
+                      {
+                          "saturation": -100
+                      },
+                      {
+                          "lightness": 99
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "geometry.stroke",
+                  "stylers": [
+                      {
+                          "color": "#808080"
+                      },
+                      {
+                          "lightness": 54
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape.man_made",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "color": "#ece2d9"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.park",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "color": "#ccdca1"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "labels.text.fill",
+                  "stylers": [
+                      {
+                          "color": "#767676"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "road",
+                  "elementType": "labels.text.stroke",
+                  "stylers": [
+                      {
+                          "color": "#ffffff"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi",
+                  "stylers": [
+                      {
+                          "visibility": "off"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "landscape.natural",
+                  "elementType": "geometry.fill",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      },
+                      {
+                          "color": "#b8cb93"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.park",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.sports_complex",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.medical",
+                  "stylers": [
+                      {
+                          "visibility": "on"
+                      }
+                  ]
+              },
+              {
+                  "featureType": "poi.business",
+                  "stylers": [
+                      {
+                          "visibility": "simplified"
+                      }
+                  ]
+              }
+          ]
+
+          });
+
+          {% for event in all_events %}
+
+            {% if event.lng and event.lat and '"' not in event.title %}
+
+              (function() {
+
+                var marker = new google.maps.Marker({
+                  position: new google.maps.LatLng({{event.lat}}, {{event.lng}}),
+                  map: map,
+                  title: "{{event.title}}"
+                });
+
+              })();
+
+            {% endif %}
+
+          {% endfor %}
+
+          map.addListener('zoom_changed', function() {
+            
+            coordInfoWindow.setContent(createInfoWindowContent(pos, map.getZoom()));
+            coordInfoWindow.open(map);
+
+          });
+
+        }, 1000);
+      
+    });
+
+  </script>
+
 {% endblock %}
