@@ -23,7 +23,7 @@ class CommunityHandler(BaseHandler):
 
     # get the vent
     group = schema.Group.get_by_id(long(communityid))
-
+    print 'looking for %s ' % communityid
     # did we find it ?
     if group == None:
 
@@ -48,4 +48,37 @@ class CommunityHandler(BaseHandler):
       'background_image': group.image
 
     }, ttl=3600)
+
+class CommunityAddHandler(BaseHandler):
+  def get(self):
+    self.render('addcommunity.html',{})
+
+  def post(self):
+    name = self.request.get('name')
+    description = self.request.get('description')
+    link = self.request.get('link')
+    # image = self.request.POST['image']
+
+    from random import randint
+
+    group = schema.Group.add_new_group(
+      name=name,
+      members=400,
+      slug='slug',
+      image='img',
+      thumbnail='thumb',
+      description=description,
+      link=link,
+      provider="jamie",
+      uid=str(randint(0,1000)),
+      lat=66,
+      lng=66,
+      enabled=True,
+      facebook_url="facebook.com",
+      facebook_uid=str(randint(0,1000)),
+      meetup_url="facebook.com",
+      meetup_uid=str(randint(0,1000))           
+    )
+
+    self.redirect('/')
     

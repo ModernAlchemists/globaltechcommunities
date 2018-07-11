@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+  <div class="contact">
+
+    <div class="container">
+
+      <div class="contact-inner">
+
+        <h2>Add your own community</h2>
+
+        <form class="form" method="post" action="/communities/add" enctype="multipart/form-data">
+
+          <div class="form-control">
+
+            <label class="form-label">Name <span class="form-required">*</span></label>
+            <input type="text" class="form-input" name="name"/>
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Description <span class="form-required">*</span></label>
+            <textarea class="form-input" name="description"></textarea>
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Link <span class="form-required">*</span></label>
+            <input type="text" class="form-input" name="link"/>
+
+          </div>
+
+          <div class="form-control">
+
+            <label class="form-label">Image <span class="form-required">*</span></label>
+            <input type="file" class="form-input" name="image" id="image" >
+
+
+          </div>
+
+
+          <div class="form-control">
+
+            <button type="submit">Add</button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+    
+{% endblock %}

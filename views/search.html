@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block page_content %}
+
+
+    <div class="container">
+
+        <h2>Results for {{ term }}</h2>
+
+        {% for group in groups %}
+            <div class="group-container">
+                <a href="/communities/{{ group.uid[0].value  }}">
+                    <img src={{ group.image[0].value }}>
+                    <h3>{{ group.name[0].value }}</h3>
+                    <p>
+                        {{ group.expressions[0].value }}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+
+    </div>
+
+    
+{% endblock %}
