@@ -32,14 +32,6 @@ class SearchHandler(BaseHandler):
         if result:
             groups = result.results
 
-        # groups = [
-        #     schema.Group(
-        #         name='jonny'
-        #     ),schema.Group(
-        #         name='Clide'
-        #     ),
-        # ]
-
         template_parms = {
             'groups': groups,
             'term': search_term
