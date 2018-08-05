@@ -23,14 +23,11 @@
           <a href="/sponsor" class="header-menu-item">Sponsor</a>
           <a href="/contact" class="header-menu-item">Contact</a>
 
-          <div>
-            <form action="/search" method="get">
-              <input type="text" name="search-term">
-              <button type="submit">Search</button>
-            </form>
-          </div>
+
 
         </div>
+
+
 
         <div class="header-logo">
 
@@ -40,6 +37,13 @@
 
           </a>
 
+        </div>
+
+        <div class="header-search">
+          <form action="/search" method="get">
+            <input type="text" name="search-term" class="search-term">
+            <button type="submit" class="search-button">Search</button>
+          </form>
         </div>
 
         <div class="clearfix"></div>
@@ -67,6 +71,8 @@
   <div class="clearfix"></div>
 
   {% block pre_page_content %}{% endblock %}
+
+
 
   <div class="content">
 
