@@ -46,7 +46,7 @@ class FetchHandler(BaseHandler):
   def get(self):
 
     # providers = [ 'meetup', 'facebook' ]
-    providers = [ 'meetup', 'facebook' ]
+    providers = [ 'meetup' ]#'facebook' ]
     for provider in providers:
       taskqueue.add(
       
@@ -178,6 +178,9 @@ class FetchHandler(BaseHandler):
         allow_truncated=True
 
       )
+
+      print(result.status_code)
+      print(result.content)
 
       if result.status_code == 200:
         body = None

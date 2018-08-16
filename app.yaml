@@ -4,12 +4,6 @@ threadsafe: true
 
 # set to run
 env_variables:
-  MEETUP_API_TOKEN: ''
-  FACEBOOK_API_TOKEN: ''
-  MEETUP_MEMBER_ID: ''
-  SENDGRID_TOKEN: ''
-  SENDGRID_FROM: ''
-  SESSION_SECRET: ''
 
 handlers:
 # Show our from the distribution

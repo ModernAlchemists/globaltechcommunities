@@ -35,6 +35,7 @@ from gtc.handlers.sponsor import SponsorHandler, SponsorFormHandler
 from gtc.handlers.contact import ContactFormHandler, ContactHandler
 
 from gtc.handlers.search import SearchHandler
+from gtc.handlers.sync import SyncHandler
 
 # General Config for our web application
 config = {
@@ -87,8 +88,8 @@ route_objs = [
   ('/contact', ContactHandler),
   ('/contactus', ContactFormHandler),
 
-  ('/search', SearchHandler)
-
+  ('/search', SearchHandler),
+  ('/sync', SyncHandler)
   # webapp2.Route('/jobs/<jobid:[\d]+>/history/<requestid:[\d]+>', RequestHandler),
   # webapp2.Route(r'/<:.*>', NotFoundHandler)
 

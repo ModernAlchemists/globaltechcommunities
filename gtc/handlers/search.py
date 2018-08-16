@@ -8,22 +8,25 @@ import gtc.schema as schema
 class SearchHandler(BaseHandler):
 
   def get(self):
-    search_term = self.request.get('search-term')
-    if not search_term:
+    search_terms = self.request.get('search-term').split(' ')
+
+    if not search_terms:
         self.redirect('/')
     else:
         index = search.Index('group')
-        snippet = "snippet(%s,description,140)" % search_term
+        expressions = []
+
+        for term in search_terms:
+            snippet = "snippet(%s,description,140)" % term
+            expressions.append(search.FieldExpression(name='snippet', expression=snippet))
 
         options = search.QueryOptions(
-            returned_expressions=[
-                search.FieldExpression(name='snippet', expression=snippet)
-            ]
+            returned_expressions=expressions
         )
 
         result = index.search(
             query=search.Query(
-                query_string=search_term,
+                query_string=' '.join(search_terms),
                 options=options
             )
         )
@@ -34,7 +37,7 @@ class SearchHandler(BaseHandler):
 
         template_parms = {
             'groups': groups,
-            'term': search_term
+            'term': ' '.join(search_terms)
         }
 
         self.render('search.html',template_parms)

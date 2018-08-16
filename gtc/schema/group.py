@@ -53,6 +53,33 @@ class Group(BaseModel):
     query = query.order(-Group.name)
     return query.fetch()
 
+  def index(self):
+    print(self.key.id())
+    index = search.Index('group')
+    doc = search.Document(
+      doc_id=str(self.key.id()),
+      fields=[
+        search.TextField(name='name', value=self.name),
+        search.NumberField(name='members', value=self.members),
+        search.TextField(name='slug', value=self.slug),
+        search.TextField(name='description', value=self.description),
+        search.TextField(name='image', value=self.image),
+        search.TextField(name='link', value=self.link),
+        search.TextField(name='provider', value=self.provider),
+        search.TextField(name='uid', value=self.uid),
+        search.NumberField(name='lat', value=self.lat),
+        search.NumberField(name='lng', value=self.lng),
+        search.TextField(name='facebook_url', value=self.facebook_url),
+        search.TextField(name='facebook_uid', value=self.facebook_uid),
+        search.TextField(name='meetup_url', value=self.meetup_url),
+        search.TextField(name='meetup_uid', value=self.meetup_uid)
+      ]
+    )
+
+    index.put(doc)
+
+
+
   @classmethod
   def add_new_group(cls,name,members,slug,description,image,thumbnail,link,provider,uid,lat,lng,enabled,facebook_url,facebook_uid,meetup_url,meetup_uid):
     group_key = cls(
@@ -72,29 +99,12 @@ class Group(BaseModel):
       facebook_uid=facebook_uid,  
       meetup_url=meetup_url,    
       meetup_uid=meetup_uid
-    ).put()
-
-    index = search.Index('group')
-    doc = search.Document(
-      doc_id=str(group_key.id()),
-      fields=[
-        search.TextField(name='name',value=name),
-        search.NumberField(name='members',value=members),
-        search.TextField(name='slug',value=slug),
-        search.TextField(name='description',value=description),
-        search.TextField(name='image',value=image),
-        search.TextField(name='link',value=link),
-        search.TextField(name='provider',value=provider),
-        search.TextField(name='uid',value=uid),
-        search.NumberField(name='lat',value=lat),
-        search.NumberField(name='lng',value=lng),
-        search.TextField(name='facebook_url',value=facebook_url),
-        search.TextField(name='facebook_uid',value=facebook_uid),
-        search.TextField(name='meetup_url',value=meetup_url),
-        search.TextField(name='meetup_uid',value=meetup_uid)
-      ]
     )
 
-    index.put(doc)
+    group_key.put()
+    group_key.index()
+
+
+
 
   
