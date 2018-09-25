@@ -69,3 +69,6 @@ vagrant/
 backups/
 yarn.lock
 
+.vscode/
+venv/
+.idea

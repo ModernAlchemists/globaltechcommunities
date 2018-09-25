@@ -54,15 +54,15 @@ class Group(BaseModel):
     return query.fetch()
 
   def index(self):
-    print(self.key.id())
     index = search.Index('group')
+    id = self.key.id()
     doc = search.Document(
-      doc_id=str(self.key.id()),
+      doc_id=str(id),
       fields=[
         search.TextField(name='name', value=self.name),
         search.NumberField(name='members', value=self.members),
         search.TextField(name='slug', value=self.slug),
-        search.TextField(name='description', value=self.description),
+        search.TextField(name='description', value=strings.text_from_html(self.description)),
         search.TextField(name='image', value=self.image),
         search.TextField(name='link', value=self.link),
         search.TextField(name='provider', value=self.provider),
@@ -72,33 +72,30 @@ class Group(BaseModel):
         search.TextField(name='facebook_url', value=self.facebook_url),
         search.TextField(name='facebook_uid', value=self.facebook_uid),
         search.TextField(name='meetup_url', value=self.meetup_url),
-        search.TextField(name='meetup_uid', value=self.meetup_uid)
+        search.TextField(name='meetup_uid', value=self.meetup_uid),
       ]
     )
 
     index.put(doc)
 
-
-
-  @classmethod
-  def add_new_group(cls,name,members,slug,description,image,thumbnail,link,provider,uid,lat,lng,enabled,facebook_url,facebook_uid,meetup_url,meetup_uid):
+  def add_new_group(self):
     group_key = cls(
-      name=name,          
-      members=members,       
-      slug=slug,          
-      description=description,
-      image=image,
-      thumbnail=thumbnail,
-      link=link,
-      provider=provider,
-      uid=uid,
-      lat=lat,          
-      lng=lng,          
-      enabled=enabled,       
-      facebook_url=facebook_url,  
-      facebook_uid=facebook_uid,  
-      meetup_url=meetup_url,    
-      meetup_uid=meetup_uid
+      name=self.name,          
+      members=self.members,       
+      slug=self.slug,          
+      description=self.description,
+      image=self.image,
+      thumbnail=self.thumbnail,
+      link=self.link,
+      provider=self.provider,
+      uid=self.uid,
+      lat=self.lat,          
+      lng=self.lng,          
+      enabled=self.enabled,       
+      facebook_url=self.facebook_url,  
+      facebook_uid=self.facebook_uid,  
+      meetup_url=self.meetup_url,    
+      meetup_uid=self.meetup_uid
     )
 
     group_key.put()

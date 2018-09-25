@@ -19,7 +19,11 @@ import gtc.schema as schema
 import gtc.utils.string as string_utils
 
 # Setup our Jinja Runner
-jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader('views'))
+jinja_environment = jinja2.Environment(
+  loader=jinja2.FileSystemLoader('views'),
+  autoescape=True
+)
+
 CURRENT_VERSION = string_utils.md5(os.environ['CURRENT_VERSION_ID'])
 
 #
@@ -134,7 +138,7 @@ class BaseHandler(webapp2.RequestHandler):
   # Do some general checks
   # here we mostly just check users
   def dispatch(self):
-
+    print 'dispatch'
     print "URL: " + str(self.request.path)
 
     # Run the setup

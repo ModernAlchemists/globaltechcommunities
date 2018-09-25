@@ -18,8 +18,6 @@ from gtc.handlers.event import EventHandler
 
 from gtc.handlers.communities import CommunitiesHandler
 from gtc.handlers.community import CommunityHandler
-from gtc.handlers.community import CommunityAddHandler
-
 
 from gtc.handlers.admin import AdminHandler
 from gtc.handlers.edit import AdminGroupEditHandler
@@ -75,7 +73,6 @@ route_objs = [
   webapp2.Route('/events/<year:[\d]+>/<month:[\d]+>/<eventid:[\d]+>/<slug:[.*]+>', EventHandler),
   
   ('/communities', CommunitiesHandler),
-  ('/communities/add', CommunityAddHandler),
   webapp2.Route('/communities/<communityid:[\d]+>', CommunityHandler),
   webapp2.Route('/communities/<communityid:[\d]+>/<slug:[.*]+>', CommunityHandler),
   webapp2.Route('/communities/<communityid:[\d]+>/calendar.ics', GroupICalHandler),

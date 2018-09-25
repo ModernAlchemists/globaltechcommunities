@@ -59,6 +59,7 @@ class FetchHandler(BaseHandler):
         }
 
       )
+      print "add task"
     self.response.out.write('OK')
 
   def post(self):
@@ -195,8 +196,9 @@ class FetchHandler(BaseHandler):
 
         keys = []
         for item in body:
-
+          #get group by id
           group = schema.Group.get_by_uid(provider,str(item['group']['id']))
+          #create group if it does not exist
           if group == None:
             group = schema.Group()
           group.slug = item['group']['urlname']
@@ -206,7 +208,9 @@ class FetchHandler(BaseHandler):
           group.uid = str(item['group']['id'])
 
           group.put()
+          # group.index()
 
+          #fetch details about group if we didn't just do so 
           if group.key not in keys:
             taskqueue.add(
       
@@ -220,10 +224,12 @@ class FetchHandler(BaseHandler):
               }
 
             )
-
+          #remember that we just got details about this group
           keys.append(group.key)
 
+          #check if we know this even already
           event = schema.Event.get_by_uid(provider,str(item['id']))
+          #otherwise create a new event
           if event == None:
             event = schema.Event()
           event.timestamp = datetime.datetime.fromtimestamp( long(item['time']) / 1e3 )

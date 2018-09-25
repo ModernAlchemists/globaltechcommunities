@@ -67,6 +67,7 @@ class DetailsHandler(BaseHandler):
         if 'key_photo' in body:
           group.thumbnail = body['key_photo']['photo_link']
         group.put()
+        group.index()
       self.send('done')
 
     else:

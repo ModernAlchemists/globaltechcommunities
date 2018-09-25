@@ -72,3 +72,11 @@ def random(size=6):
 def slugify(text_str):
   text_str = str( unicode(text_str).encode('ascii', 'ignore') ).strip().lower()
   return re.sub(r'\W+','-',text_str)
+
+
+def text_from_html(raw_html):
+  cleanr = re.compile('<.*?>')
+  cleantext = re.sub(cleanr, '', raw_html)
+  entityr = re.compile('&.*?;')
+  cleantext = re.sub(entityr, '', cleantext)
+  return cleantext

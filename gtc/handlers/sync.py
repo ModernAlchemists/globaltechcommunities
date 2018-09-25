@@ -19,17 +19,32 @@ import gtc.schema as schema
 
 # Acts as the Frontpage when users are not signed in and the dashboard when they are.
 class SyncHandler(BaseHandler):
-
+    #we want to add all groups from datastore to a search index
     def get(self):
+        #get all groups
         groups = schema.Group.fetch()
 
+        #keep track of already indexed groups
+        keys = []
         for group in groups:
             try:
-                print(group.key.id())
-                group.index()
+                #if this is an unseen group
+                if group.key not in keys:
+                    keys.append(group.key)
+
+                    #fetch the details of the group
+                    taskqueue.add(
+                        url='/details',
+                        queue_name='fetch',
+                        params={
+                            'provider':   group.provider,
+                            'groupid':    group.key.id()
+                        }
+                    )
 
             except Exception as e:
+                print e
                 pass
             continue
 
-        self.send('indexed groups sucessfully')
+        self.send('OK')

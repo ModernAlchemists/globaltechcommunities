@@ -1,25 +1,26 @@
+
 {% extends "layout.html" %}
 
 {% block page_content %}
 
-
-    <div class="container">
+    <div class="search-results container">
 
         <h2>Results for {{ term }}</h2>
 
-        {% for group in groups %}
-            <div class="group-container">
-                <a href="/communities/{{ group.uid[0].value  }}">
-                    <img src={{ group.image[0].value }}>
-                    <h3>{{ group.name[0].value }}</h3>
-                    <p>
-                        {{ group.expressions[0].value }}
-                    </p>
-                </a>
-            </div>
-        {% endfor %}
+        {% if groups|length > 0 %}
+            {% for group in groups %}
+                <div class="group-container">
+                    <a href="/communities/{{ group.doc_id }}">
+                        <img src="{{ group.image[0].value }}">
+                        <h3>{{ group.name[0].value }}</h3>
+                        <div class="group-snippet">{{ group.expressions[0].value |safe }}</div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+                <p>No results</p>
+        {% endif %}        
 
     </div>
 
-    
 {% endblock %}
