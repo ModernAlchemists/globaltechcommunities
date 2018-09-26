@@ -23,7 +23,7 @@ class CommunityHandler(BaseHandler):
 
     # get the vent
     group = schema.Group.get_by_id(long(communityid))
-    print 'looking for %s ' % communityid
+    # print 'looking for %s ' % communityid
     # did we find it ?
     if group == None:
 

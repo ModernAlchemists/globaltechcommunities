@@ -55,9 +55,9 @@ class Group(BaseModel):
 
   def index(self):
     index = search.Index('group')
-    id = self.key.id()
+    id = self.uid
     doc = search.Document(
-      doc_id=str(id),
+      doc_id=str(id), #use uid to prevent duplication
       fields=[
         search.TextField(name='name', value=self.name),
         search.NumberField(name='members', value=self.members),
@@ -73,6 +73,7 @@ class Group(BaseModel):
         search.TextField(name='facebook_uid', value=self.facebook_uid),
         search.TextField(name='meetup_url', value=self.meetup_url),
         search.TextField(name='meetup_uid', value=self.meetup_uid),
+        search.TextField(name='document_id', value=str(self.key.id())) #save document_id for links
       ]
     )
 
@@ -100,6 +101,7 @@ class Group(BaseModel):
 
     group_key.put()
     group_key.index()
+
 
 
 

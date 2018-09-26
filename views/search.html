@@ -10,7 +10,7 @@
         {% if groups|length > 0 %}
             {% for group in groups %}
                 <div class="group-container">
-                    <a href="/communities/{{ group.doc_id }}">
+                    <a href="/communities/{{ group.document_id[0].value }}">
                         <img src="{{ group.image[0].value }}">
                         <h3>{{ group.name[0].value }}</h3>
                         <div class="group-snippet">{{ group.expressions[0].value |safe }}</div>

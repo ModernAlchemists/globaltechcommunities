@@ -61,7 +61,7 @@ class Event(BaseModel):
   def get_by_filter(starts=None,ends=None,group=None,limit=None):
     query = Event.query()
 
-    print group
+    # print group
 
     if group != None: query = query.filter(Event.group==group.key)
     if starts != None: query = query.filter(Event.timestamp>=starts)

@@ -14,6 +14,7 @@ from webapp2_extras import sessions
 from gtc.handlers.base import BaseHandler
 import gtc.utils.log as log
 import gtc.utils.string as strings
+import gtc.utils.data as data
 import gtc.schema as schema
 
 
@@ -21,6 +22,9 @@ import gtc.schema as schema
 class SyncHandler(BaseHandler):
     #we want to add all groups from datastore to a search index
     def get(self):
+        #delete old index
+        data.deleteAllInIndex('group')
+
         #get all groups
         groups = schema.Group.fetch()
 
@@ -29,8 +33,8 @@ class SyncHandler(BaseHandler):
         for group in groups:
             try:
                 #if this is an unseen group
-                if group.key not in keys:
-                    keys.append(group.key)
+                if group.uid not in keys:
+                    keys.append(group.uid)
 
                     #fetch the details of the group
                     taskqueue.add(

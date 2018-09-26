@@ -98,6 +98,7 @@ class EventsListHandler(BaseHandler):
     # list them all
     for event in events:
 
+
       # get the group
       group = event.group.get()
 
@@ -109,6 +110,7 @@ class EventsListHandler(BaseHandler):
       # set the title
       title = None
 
+      
       try:
         # set the title
         title = str(event.title)
@@ -156,6 +158,8 @@ class EventsListHandler(BaseHandler):
         ))
 
       })
+      
+    print 'RENDOG'
 
     # check if we currently have that plan registered
     self.render('events.html', {
